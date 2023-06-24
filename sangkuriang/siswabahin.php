@@ -37,7 +37,7 @@ if($_SESSION['salah'] == 0)
                   tgLahir = '$tgLahir',
                   tgMasuk = '$tgMasuk',
                   JK = '$JK',
-                  noHP = '$noHP',
+                  noHP = '$noHP'
             WHERE ID = '$ID'";
 
     $qrySS = mysqli_query($conSS, $st);
