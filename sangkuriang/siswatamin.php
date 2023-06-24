@@ -9,9 +9,9 @@
     }
 
     $ID      = $_POST['txtID'];
-    $nama    = isset($_POST['txtNama'])    ? mysqli_real_escape_string($conSS, ucwords(strtolower($_POST['txtNama'])))    : "";
-    $tpLahir = isset($_POST['txtTpLahir']) ? mysqli_real_escape_string($conSS, ucwords(strtolower($_POST['txtTpLahir']))) : "";
-    $alamat  = isset($_POST['txtAlmat'])   ? mysqli_real_escape_string($conSS, ucwords(strtolower($_POST['txtAlmat'])))   : "";
+    $nama    = isset($_POST['txtNama'])    ? ucwords(strtolower($_POST['txtNama']))    : "";
+    $tpLahir = isset($_POST['txtTpLahir']) ? ucwords(strtolower($_POST['txtTpLahir'])) : "";
+    $alamat  = isset($_POST['txtAlamat'])   ? ucwords(strtolower($_POST['txtAlamat']))   : "";
     $JK      = isset($_POST['cbbJK'])      ? $_POST['cbbJK'] : "x";
     $noHP    = isset($_POST['txtNoHP']) && (int) $_POST['txtNoHP'] > 0 ? $_POST['txtNoHP'] : "";
 
@@ -32,11 +32,10 @@
     if($_SESSION['salah'] == 0)
     {
         $st = "INSERT INTO t_siswa
-             VALUES ('$ID'      , '".addslashes($nama)."',
-                     '$JK'      , '".addslashes($tpLahir)."',
-                     '$tgLahir' , '".addslashes($alamat)."',
-                     '$noHP'    , '$tgMasuk')";
-
+                VALUES ('$ID'      , '".addslashes($nama)."',
+                        '$JK'      , '".addslashes($tpLahir)."',
+                        '$tgLahir' , '".addslashes($alamat)."',
+                        '$noHP'    , '$tgMasuk')";
 
         $qrySS = mysqli_query($conSS, $st);
 
