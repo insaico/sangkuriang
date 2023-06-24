@@ -8,7 +8,12 @@ if (!isset($_SESSION['namaUser'])) {
 }
 
 $idMenu = 110;
+
+if (isset($_SESSION['nGuru']) && $_SESSION['nGuru'] < 1) {
+    $_SESSION['aktif'] = "T";
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="id">
 
@@ -101,7 +106,7 @@ $idMenu = 110;
                                 <?php else : ?>
                                     <select name="cbbAktif" class="form-control">
                                         <option <?php if ($_SESSION['aktif'] == "Y") echo "selected='selected'"; ?> value="Y">Ya</option>
-                                        <option <?php if ($_SESSION['aktif'] != "Y") echo "selected='selected'"; ?> value="T">Tidak</option>
+                                        <option <?php if ($_SESSION['aktif'] == "T") echo "selected='selected'"; ?> value="T">Tidak</option>
                                     </select>
                                 <?php endif; ?>
                             </div>

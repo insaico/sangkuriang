@@ -137,7 +137,8 @@ $idMenu = 220;
                                                 <td class="text-center"><?= $nmr++; ?></td>
                                                 <td><?= $data['nama']; ?></td>
                                                 <td class="text-center">
-                                                    <input type="checkbox" value="<?= $data['kode']; ?>">
+                                                <input type="checkbox" value="<?= $data['kode']; ?>" name="lstTambah[]">
+
                                                 </td>
                                             </tr>
                                         <?php endwhile ?>

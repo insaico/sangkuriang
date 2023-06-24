@@ -15,7 +15,7 @@ if(isset($_POST['btnHapus']))
     $st = "DELETE FROM t_guru WHERE ID ='$ID'";
     $qrySS = mysqli_query($conSS, $st);
     
-    $st = "DELETE FROM t_gunor WHERE ID ='$ID'";
+    $st = "DELETE FROM t_gunor WHERE IdGuru ='$ID'";
     $qrySS = mysqli_query($conSS, $st);
 }
 else if (isset($_POST['btnNA']))

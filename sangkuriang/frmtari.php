@@ -49,77 +49,95 @@ $idMenu = 11;
                         $qrySS  = mysqli_query($conSS, $st);
 
                         $nmr    = 1;
-                        ?>
-                        <table class="table table-sm">
-                            <thead>
-                                <tr>
-                                    <td colspan="8" class="text-end">
-                                        <a href="frmtaritam.php" class="btn btn-sm btn-primary">
-                                            <i class="fas fa-plus"></i>Tarian Baru</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th class="text-center">No.</th>
-                                    <th>Nama Tarian</th>
-                                    <th class="text-center">Kode</th>
-                                    <th class="text-center">Jenis</th>
-                                    <th class="text-center">Lama Latihan</th>
-                                    <th class="text-center">Pengajar</th>
-                                    <th class="text-center">Aktif</th>
-                                    <th class="text-center">Tindakan</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php while ($data = mysqli_fetch_array($qrySS)) : ?>
-                                    <tr>
-                                        <td class="text-center"><?= $nmr++; ?></td>
-                                        <td><?= $data['nama']; ?></td>
-                                        <td class="text-center"><?= $data['kode']; ?></td>
-                                        <td class="text-center"><?php
-                                            switch ($data['jenis'])
-                                            {
-                                                case "D": echo "Daerah"; break;
-                                                case "M": echo "Modern";
-                                            }?>
-                                        </td>
-                                        <td class="text-center"><?= $data['lama']; ?>Minggu</td>
-                                        <td class="text-center"><?php 
-                                            $st = "SELECT COUNT(idGuru) as nGuru
-                                                    FROM t_guri INNER JOIN t_guru on t_guri.idGuru = t_guru.ID
-                                                   WHERE idTari = '".$data['kode']."'
-                                                    AND aktif = 'Y'
-                                                   ORDER BY nama";
-                                            
-                                            $qrySS = mysqli_query($conSS, $st);
-                                            $data2 = mysqli_fetch_array($qrySS);
 
-                                            if($data2['nGuru'] < 1) echo "Tidak Ada"; else echo "Ada";
-                                            ?>
-                                        </td>
-                                        <td class="text-center"><?php  
-                                            if($data['aktif'] == "Y")
-                                            {
-                                                if($data2['nGuru'] < 1) echo "<div class=\"text-danger\">";
-                                                echo "Ya";
-                                                if($data2['nGuru'] < 1) echo "</div>";
-                                            }
-                                            else
-                                            {
-                                                echo "Tidak";
-                                            }?>
-                                        </td>
-                                        <td class="text-center">
-                                            <button class="btn py-0" name="btnTariU" value="<?= $data['kode']; ?>">
-                                                <i class="fas fa-edit"></i> Ubah
-                                            </button>
-                                            <button class="btn py-0" name="btnTariH" value="<?= $data['kode']; ?>">
-                                                <i class="fas fa-trash"></i> Hapus
-                                            </button>
+                        if (mysqli_num_rows($qrySS) > 0) {
+                            ?>
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <td colspan="8" class="text-end">
+                                            <a href="frmtaritam.php" class="btn btn-sm btn-primary">
+                                                <i class="fas fa-plus"></i>Tarian Baru</a>
                                         </td>
                                     </tr>
-                                <?php endwhile; ?>
-                            </tbody>
-                        </table>
+                                    <tr>
+                                        <th class="text-center">No.</th>
+                                        <th>Nama Tarian</th>
+                                        <th class="text-center">Kode</th>
+                                        <th class="text-center">Jenis</th>
+                                        <th class="text-center">Lama Latihan</th>
+                                        <th class="text-center">Pengajar</th>
+                                        <th class="text-center">Aktif</th>
+                                        <th class="text-center">Tindakan</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php while ($data = mysqli_fetch_array($qrySS)) : ?>
+                                        <tr>
+                                            <td class="text-center"><?= $nmr++; ?></td>
+                                            <td><?= $data['nama']; ?></td>
+                                            <td class="text-center"><?= $data['kode']; ?></td>
+                                            <td class="text-center">
+                                                <?php
+                                                switch ($data['jenis']) {
+                                                    case "D":
+                                                        echo "Daerah";
+                                                        break;
+                                                    case "M":
+                                                        echo "Modern";
+                                                        break;
+                                                }
+                                                ?>
+                                            </td>
+                                            <td class="text-center"><?= $data['lama']; ?> Minggu</td>
+                                            <td class="text-center">
+                                                <?php
+                                                $st = "SELECT COUNT(idGuru) as nGuru
+                                                        FROM t_guri INNER JOIN t_guru on t_guri.idGuru = t_guru.ID
+                                                        WHERE idTari = '".$data['kode']."'
+                                                        AND aktif = 'Y'
+                                                        ORDER BY nama";
+
+                                                $qryGuru = mysqli_query($conSS, $st);
+                                                $dataGuru = mysqli_fetch_array($qryGuru);
+
+                                                if ($dataGuru['nGuru'] < 1) {
+                                                    echo "Tidak Ada";
+                                                } else {
+                                                    echo "Ada";
+                                                }
+                                                ?>
+                                            </td>
+                                            <td class="text-center">
+                                                <?php
+                                                if ($data['aktif'] == "Y") {
+                                                    if ($dataGuru['nGuru'] < 1) {
+                                                        echo "<div class=\"text-danger\">Ya</div>";
+                                                    } else {
+                                                        echo "Ya";
+                                                    }
+                                                } else {
+                                                    echo "Tidak";
+                                                }
+                                                ?>
+                                            </td>
+                                            <td class="text-center">
+                                                <button class="btn py-0" name="btnTariU" value="<?= $data['kode']; ?>">
+                                                    <i class="fas fa-edit"></i> Ubah
+                                                </button>
+                                                <button class="btn py-0" name="btnTariH" value="<?= $data['kode']; ?>">
+                                                    <i class="fas fa-trash"></i> Hapus
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    <?php endwhile; ?>
+                                </tbody>
+                            </table>
+                        <?php
+                        } else {
+                            echo "<p>Tidak ada data tarian.</p>";
+                        }
+                        ?>
                     </form>
                 </div>
             </main>
@@ -135,4 +153,5 @@ $idMenu = 11;
     <script src="alat2/bootstrap.bundle.min.js"></script>
     <script src="alat2/scripts.js"></script>
 </body>
+
 </html>

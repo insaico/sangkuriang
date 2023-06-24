@@ -114,7 +114,7 @@
                     </div>
 
                     <?php 
-                        $st    = "SELECT 1 FROM t_guri WHERE idGuru = '".$_SESSION['pilGuru']."'";
+                        $st    = "SELECT 1 FROM t_guri WHERE idGUru = '".$_SESSION['pilGuru']."'";
                         $qrySS = mysqli_query($conSS, $st);
                         $ada   = mysqli_num_rows($qrySS);
                     ?>
